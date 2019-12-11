@@ -32,6 +32,11 @@ namespace Homework_8
 
         public void Print() //method to output matrix into the console
         {
+            if (Elements == null)
+            {
+                Console.WriteLine("Matrix wasn't initialized!");
+                return;
+            }
             Console.WriteLine("Matrix:\n");
             for (int i = 0; i < Elements.GetLength(0); i++)
             {
@@ -56,17 +61,19 @@ namespace Homework_8
             Matrix1 = m1;
             Matrix2 = m2;
             MatrixRes = m3;
+            if (Matrix1 == null) Matrix1 = new Matrix(true);
+            if (Matrix2 == null) Matrix2 = new Matrix(true);
         }
         public void Multiply(object index) //method of one iteration of matrix multiply, with one parameter of type object to work with ParameterizedThreadStart
         {
-            int row = (int) index;
-            if (Matrix1.Elements.GetLength(1) != Matrix2.Elements.GetLength(0))
+            if (Matrix1.Elements == null || Matrix2.Elements == null ||
+                Matrix1.Elements.GetLength(1) != Matrix2.Elements.GetLength(0))
                 return;
             if (MatrixRes.Elements == null)
             {
                 MatrixRes.Elements = new int[Matrix1.Elements.GetLength(0), Matrix2.Elements.GetLength(1)];
             }
-
+            int row = (int)index;
             for (int j = 0; j < Matrix2.Elements.GetLength(1); j++)
             {
                 int res = 0;
